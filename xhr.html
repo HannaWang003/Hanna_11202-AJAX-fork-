@@ -1,39 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>XMLHttpRequest</title>
-    <link rel="shortcut icon" href="#" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="stylesheet" href="./plugin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <h1 class="header">XMLHttpRequest</h1>
-    <div class="title"></div>
-    <h4></h4>
-    <ul></ul>
-
-</body>
+    <h4 class="title"></h4>
+    <div class="updated"></div>
+    <ul class="list-group"></ul>
+    <script src="./plugin/js/jquery.js"></script>
+    <script src="./plugin/js/bootstrap.js"></script>
+  </body>
 </html>
 <script>
-    /********************************************************
-    * 1.api網址  https://kktix.com/events.json
-    * 2.宣告一個XMLHttpRequest物件
-    * 3.建立請求的各項設定及實質內容
-    * 4.建立得到回應時的各項行為
-    * 5.送出請求
-    ********************************************************/
+  /********************************************************
+   * 1.api網址  https://kktix.com/events.json
+   * 2.宣告一個XMLHttpRequest物件
+   * 3.建立請求的各項設定及實質內容
+   * 4.建立得到回應時的各項行為
+   * 5.送出請求
+   ********************************************************/
 
-    //宣告一個XMLHttpRequest物件
+  //宣告一個XMLHttpRequest物件
+  let xhr = new XMLHttpRequest();
+  xhr.responseType = "json"; //直接告知回傳的資料是JSON格式
+  //建立請求的各項設定及實質內容
+  //async - 非同步
+  //sync - 同步
+  //   xhr.open(
+  //     Method, //get,post,put,patch,delete
+  //     URL,
+  //     async
+  //   );
+  xhr.open("GET", "https://kktix.com/events.json");
+  //建立得到回應時的各項設定及行為
+  xhr.onload = function () {
+    let type = xhr.getResponseHeader("Content-Type");
+    let status = xhr.status; //狀態碼200是請求成功
+    // let response = xhr.responseText; //把回應的東西轉成文字
+    let response = xhr.response; //基於L29所以這邊直接寫response就可以了
+    // let res = JSON.parse(response); //轉換文字為jason物件格式
+    // document.write(response);//在網頁把回應寫進去
+    console.log(response); //在console顯示
+    let events = response.entry;
+    // console.log(events);
+    events.forEach((event, idx) => {
+      $("ul").append(
+        `<li class='list-group-item list-group-item-action'>
+            <div>${event.title}</div>
+            <div>${event.summary}</div>
+            <div>${event.content}</div>
+            </li>`
+      );
+    });
+    $(".title").text(response.title);
+    $(".updated").text(response.updated);
+  };
 
-
-    //建立請求的各項設定及實質內容
-
-
-    //建立得到回應時的各項設定及行為
-
-
-    //送出請求
-
-    </script>
+  //送出請求
+  xhr.send();
+</script>
