@@ -1,36 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>axios</title>
-    <link rel="shortcut icon" href="#" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="stylesheet" href="./plugin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
     <!-----引入axios函式庫------->
-</head>
-<body>
+  </head>
+  <body>
     <h1 class="header">axios</h1>
-    <div class="title"></div>
+    <h4 class="title"></h4>
+    <div class="updated"></div>
+    <ul class="list-group"></ul>
     <h4></h4>
     <ul></ul>
-    
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./plugin/js/bootstrap.js"></script>
+  </body>
 </html>
 <script>
-/********************************************************
-* 1.api網址  https://kktix.com/events.json
-* 2.發起一個axios請求
-* 3.建立回呼函式(call back function)來處理回應時的各項行為
-* 4.建立錯誤處理
-********************************************************/
+  /********************************************************
+   * 1.api網址  https://kktix.com/events.json
+   * 2.發起一個axios請求
+   * 3.建立回呼函式(call back function)來處理回應時的各項行為
+   * 4.建立錯誤處理
+   ********************************************************/
 
-//發起一個axios請求
+  //發起一個axios請求
+  axios
+    .get("https://kktix.com/events.json")
+    //   這是promise的請求方式
+    .then((res) => {
+      console.log(res);
+      let data = res.data;
+      let events = data.entry;
+      // console.log(events);
+      let ul = document.querySelector("ul");
+      events.forEach((event, idx) => {
+        let li = document.createElement("li");
+        li.setAttribute("class", "list-group-item list-group-item-action");
+        let div1 = document.createElement("div");
+        let div2 = document.createElement("div");
+        let div3 = document.createElement("div");
+        let title = document.createTextNode(event.title);
+        let summary = document.createTextNode(event.summary);
+        let content = document.createTextNode(event.content);
+        div1.appendChild(title);
+        div2.appendChild(summary);
+        div3.appendChild(content);
+        li.appendChild(div1);
+        li.appendChild(div2);
+        li.appendChild(div3);
+        ul.appendChild(li);
+      });
+      document.querySelector(".title").innerHTML = "data.title";
+      document.querySelector(".updated").innerHTML = "data.updated";
+    });
+  //建立回呼函式(call back function)來處理回應時的各項行為
 
-
-//建立回呼函式(call back function)來處理回應時的各項行為
-
-
-//建立錯誤處理
-
+  //建立錯誤處理
 </script>
