@@ -1,50 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>學生資料管理系統</title>
-    <link rel="shortcut icon" href="#" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="stylesheet" href="../plugin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
     <!---匯入要使用的函式庫--->
-
-
-</head>
-<body>
-  <h1 class="header">學生資料管理系統</h1>
-
-  
-</body>
+  </head>
+  <body>
+    <h1 class="header">學生資料管理系統</h1>
+    <div>
+      <button onclick="query('sex=1')">男生</button>
+    </div>
+    <div class="users d-flex flex-wrap container"></div>
+    <script src="jquery-2.1.4.min.js"></script>
+  </body>
 </html>
 <script>
-/************************************
-* 1.考慮觸發行為的事件
-* 2.建立監聽行為
-* 3.考慮是否需要代入參數
-* 4.是否會有回傳值？回傳值的功用及處理？
-* 5.是否需要更新畫面內容？更新畫面的方法？
-************************************/
+  queryAll();
+  /************************************
+   * 1.考慮觸發行為的事件
+   * 2.建立監聽行為
+   * 3.考慮是否需要代入參數
+   * 4.是否會有回傳值？回傳值的功用及處理？
+   * 5.是否需要更新畫面內容？更新畫面的方法？
+   ************************************/
 
+  //新增資料的函式
+  function create() {}
 
-//新增資料的函式
-function create(){
+  //查詢資料的函式
+  function query(def) {
+    def = def.split("=");
+    $.get("./api/query.php?do=def", { def }, (res) => {
+      console.log(res);
+    });
+  }
+  function queryAll() {
+    $.getJSON("./api/query.php?do=all", (users) => {
+      // users = JSON.parse(users)
+      // console.log(users);
+      let user_layout;
+      users.forEach((user, idx) => {
+        user_layout = `<div class='p-1'>
+<div class="card" style="width: 18rem;">
+<div class='name text-center text-lg'>${user.name}</div>
+  <div class="card-body">
+    <h5 class="card-title">${user.school_num}</h5>
+    <div class="card-text">${user.birthday}</div>
+    <div class="card-text">${user.uni_id}</div>
+  <div class="controls">
+    <a href="#" class="btn btn-primary">編輯</a>
+    <a href="#" class="btn btn-danger">刪除</a>
+    </div>
+  </div>
+</div>
+</div>`;
+        $(".users").append(user_layout);
+      });
+    });
+  }
 
-}
+  //編輯資料的函式
+  function update() {}
 
-//查詢資料的函式
-function query(){
-
-}
-
-//編輯資料的函式
-function update(){
-
-}
-
-//刪除資料的函式
-function del(){
-
-}
-
+  //刪除資料的函式
+  function del() {}
 </script>
