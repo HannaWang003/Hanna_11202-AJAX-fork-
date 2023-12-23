@@ -17,9 +17,7 @@
         <button type="button" onclick="query('sex',1)" class="btn btn-primary">男生</button>
         <button type="button" onclick="query('sex',2)" class="btn btn-warning">女生</button>
       </div>
-      <div class="classes my-2">
-        <button type="button" onclick="query('class',101)" class="btn btn-info">一年一班</button>
-      </div>
+      <div class="classes my-2"></div>
       <div class="users d-flex flex-wrap"></div>
     </div>
 
@@ -35,6 +33,7 @@
    * 5.是否需要更新畫面內容？更新畫面的方法？
    ************************************/
   queryAll();
+  queryClasses();
 
   //新增資料的函式
   function create() {}
@@ -45,10 +44,22 @@
     // def = def.split(",")
   function query(type,val){
     $.get(`./api/query.php?do=${type}`,{val},(res)=>{
-// console.log(res);
+console.log(res);
 render(res);
     })
   }
+// 查詢全校班級
+function queryClasses(){
+  $.getJSON("./api/query.php?do=classes", (classes) => {
+// console.log(classes)
+classes.forEach((cla,idx)=>{
+  let class_item;
+  class_item = `<button onclick="query('class',${cla.code})" class='btn btn-info text-center fs-5 me-2 my-2'>${cla.name}</button>`;
+  $(".classes").append(class_item);
+})
+  })
+
+}
 //查詢全部資料的函式
   function queryAll() {
     //如果後端有header(..json)且echo json_encode(返回的數值)，前端可以不用寫成.getJSON()
