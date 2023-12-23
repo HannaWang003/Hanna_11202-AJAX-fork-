@@ -13,7 +13,13 @@
   <body>
     <h1 class="header">學生資料管理系統</h1>
     <div class="container">
-      <button type="button" onclick="query('sex=1')">男生</button>
+      <div class="sex">
+        <button type="button" onclick="query('sex',1)" class="btn btn-primary">男生</button>
+        <button type="button" onclick="query('sex',2)" class="btn btn-warning">女生</button>
+      </div>
+      <div class="classes my-2">
+        <button type="button" onclick="query('class',101)" class="btn btn-info">一年一班</button>
+      </div>
       <div class="users d-flex flex-wrap"></div>
     </div>
 
@@ -35,28 +41,36 @@
 
   //查詢資料的函式
   //查詢特定條件的函式
-  function query(def){
-    def = def.split("=")
-    $.get("./api/query.php?do=def",{def},(res)=>{
-console.log(res);
+  // function query(def){
+    // def = def.split(",")
+  function query(type,val){
+    $.get(`./api/query.php?do=${type}`,{val},(res)=>{
+// console.log(res);
+render(res);
     })
   }
 //查詢全部資料的函式
   function queryAll() {
     //如果後端有header(..json)且echo json_encode(返回的數值)，前端可以不用寫成.getJSON()
-    $.getJSON("./api/query.php?do=all", (users) => {
+    $.getJSON("./api/query.php?do=all", (datas) => {
       // users = JSON.parse(users)
       // console.log(users);
       //設置一組html格式，用來顯示取得的資料
-      let user_layout;
-      users.forEach((user, idx) => {
-        user_layout = `<div class='p-1'>
+render(datas);
+    });
+  }
+  
+  function render(datas){
+    $(".users").html("");
+    let data_layout;
+      datas.forEach((data, idx) => {
+        data_layout = `<div class='p-1'>
 <div class="card" style="width: 18rem;">
-<div class='name text-center text-lg'>${user.name}</div>
+<div class='name text-center fs-3'>${data.name}</div>
   <div class="card-body">
-    <h5 class="card-title">${user.school_num}</h5>
-    <div class="card-text">${user.birthday}</div>
-    <div class="card-text">${user.uni_id}</div>
+    <h5 class="card-title">${data.school_num}</h5>
+    <div class="card-text">${data.birthday}</div>
+    <div class="card-text">${data.uni_id}</div>
   <div class="controls">
     <a href="#" class="btn btn-primary">編輯</a>
     <a href="#" class="btn btn-danger">刪除</a>
@@ -64,9 +78,8 @@ console.log(res);
   </div>
 </div>
 </div>`;
-        $(".users").append(user_layout);
+        $(".users").append(data_layout);
       });
-    });
   }
 
   //編輯資料的函式
