@@ -12,10 +12,11 @@
   </head>
   <body>
     <h1 class="header">學生資料管理系統</h1>
-    <div>
-      <button onclick="query('sex=1')">男生</button>
+    <div class="container">
+      <button type="button" onclick="query('sex=1')">男生</button>
+      <div class="users d-flex flex-wrap"></div>
     </div>
-    <div class="users d-flex flex-wrap container"></div>
+
     <script src="../plugin/js/jquery.js"></script>
   </body>
 </html>
@@ -33,12 +34,14 @@
   function create() {}
 
   //查詢資料的函式
-  function query(def) {
-    def = def.split("=");
-    $.get("./api/query.php?do=def", { def }, (res) => {
-      console.log(res);
-    });
+  //查詢特定條件的函式
+  function query(def){
+    def = def.split("=")
+    $.get("./api/query.php?do=def",{def},(res)=>{
+console.log(res);
+    })
   }
+//查詢全部資料的函式
   function queryAll() {
     //如果後端有header(..json)且echo json_encode(返回的數值)，前端可以不用寫成.getJSON()
     $.getJSON("./api/query.php?do=all", (users) => {

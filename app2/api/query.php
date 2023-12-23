@@ -6,4 +6,13 @@ switch($_GET['do']){
 header('Content-Type:applaction/json;charset:utf-8');
 echo json_encode($Student->all());
         break;
+    case 'def':
+dd($_GET);
+        break;
+    case 'sex':
+dd($_GET);
+        break;
+    case 'class':
+dd($_GET);
+        break;
 }
