@@ -16,11 +16,10 @@
       <button onclick="query('sex=1')">男生</button>
     </div>
     <div class="users d-flex flex-wrap container"></div>
-    <script src="jquery-2.1.4.min.js"></script>
+    <script src="../plugin/js/jquery.js"></script>
   </body>
 </html>
 <script>
-  queryAll();
   /************************************
    * 1.考慮觸發行為的事件
    * 2.建立監聽行為
@@ -28,6 +27,7 @@
    * 4.是否會有回傳值？回傳值的功用及處理？
    * 5.是否需要更新畫面內容？更新畫面的方法？
    ************************************/
+  queryAll();
 
   //新增資料的函式
   function create() {}
@@ -40,9 +40,11 @@
     });
   }
   function queryAll() {
+    //如果後端有header(..json)且echo json_encode(返回的數值)，前端可以不用寫成.getJSON()
     $.getJSON("./api/query.php?do=all", (users) => {
       // users = JSON.parse(users)
       // console.log(users);
+      //設置一組html格式，用來顯示取得的資料
       let user_layout;
       users.forEach((user, idx) => {
         user_layout = `<div class='p-1'>
