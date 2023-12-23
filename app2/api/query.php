@@ -26,7 +26,7 @@ foreach($stnums as $stn){
     }
     //再把拿到的陣列串進where in
     $in = join(",",$nums);
-$users = $Student->q("select `name`,`uni_id`,`school_num`,`birthday` from `students` where `id` in({$in})");
+$users = $Student->q("select `name`,`uni_id`,`school_num`,`birthday` from `students` where `id` in($in)");
 header('Content-Type:applaction/json;charset:utf-8');
 echo json_encode($users);
             break;

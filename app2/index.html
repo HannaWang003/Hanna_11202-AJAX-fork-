@@ -75,7 +75,7 @@ render(datas);
     $(".users").html("");
     let data_layout;
       datas.forEach((data, idx) => {
-        data_layout = `<div class='p-1'>
+        data_layout = `<div class='p-1' id='user${data.id}'>
 <div class="card" style="width: 18rem;">
 <div class='name text-center fs-3'>${data.name}</div>
   <div class="card-body">
@@ -84,7 +84,7 @@ render(datas);
     <div class="card-text">${data.uni_id}</div>
   <div class="controls">
     <a href="#" class="btn btn-primary">編輯</a>
-    <a href="#" class="btn btn-danger">刪除</a>
+    <a href="Javascript:del(${data.id})" class="btn btn-danger">刪除</a>
     </div>
   </div>
 </div>
@@ -97,5 +97,12 @@ render(datas);
   function update() {}
 
   //刪除資料的函式
-  function del() {}
+  function del(id) {
+    let con = confirm("確定要刪除嗎?");
+    if(con){
+$.post('./api/delete.php',{id},(res)=>{
+$(`#user${id}`).remove();
+})
+    }
+  }
 </script>
