@@ -84,7 +84,7 @@ class DB{
         }else{
             $sql = "inset into $this->table ";
             $col = "(`".join("`,`",array_keys($array))."`)";
-            $val = "('".join("','",array_keys($array))."')";
+            $val = "('".join("','",$array)."')";
             $sql.="$col values $val";
         }
         return $this->pdo->exec($sql);
