@@ -29,17 +29,20 @@
 
   //宣告一個XMLHttpRequest物件
   let xhr = new XMLHttpRequest();
-  xhr.responseType = "json"; //直接告知回傳的資料是JSON格式
+  // let xhr = new XMLHttpRequest();
+  // xhr.responseTyep = "json";
   //建立請求的各項設定及實質內容
   //async - 非同步
   //sync - 同步
   //   xhr.open(
-  //     Method, //get,post,put,patch,delete
-  //     URL,
-  //     async
-  //   );
-  xhr.open("GET", "https://kktix.com/events.json");
-  //建立得到回應時的各項設定及行為
+    //     Method, //get,post,put,patch,delete
+    //     URL,
+    //     async
+    //   );
+    xhr.open("GET", "https://kktix.com/events.json");
+    xhr.responseType = "json"; //直接告知回傳的資料是JSON格式
+  // xhr.open("GET","https://kktix.com/events.json");
+  //
   xhr.onload = function () {
     let type = xhr.getResponseHeader("Content-Type");
     let status = xhr.status; //狀態碼200是請求成功
