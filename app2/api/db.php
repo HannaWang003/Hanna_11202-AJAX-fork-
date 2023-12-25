@@ -96,7 +96,7 @@ class DB
                 $sql .= " where `id`={$array['id']}";
             }
         } else {
-            $sql = "inset into $this->table ";
+            $sql = "insert into $this->table ";
             $col = "(`" . join("`,`", array_keys($array)) . "`)";
             $val = "('" . join("','", $array) . "')";
             $sql .= "$col values $val";
