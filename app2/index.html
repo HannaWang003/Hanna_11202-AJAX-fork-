@@ -56,23 +56,48 @@
   //新增資料的函式
   let stuModal;
   function popForm(type, id = null) {
-    $.get("./api/user_form.php", (form) => {
-      //設這個function的原由，在於不知道這個請求什麼時候完成，所以多這個function來處理拿到表單後做的事情
-      //先把表單放到#modal裡
-      $("#modals").html(form);
-      //宣告modal物件
-      stuModal = new bootstrap.Modal("#studentForm", {
-        keyboard: false,
-      });
-      //註冊modal的顯示物件
-      $("#studentForm").on("show.bs.modal", () => {
-        $.get("./api/get_schools.php", (options) => {
-          $("#graduate_at").html(options);
+    //用於判斷新增或修改
+    switch (type) {
+      case "add":
+        $.get("./api/user_form.php", (form) => {
+          //設這個function的原由，在於不知道這個請求什麼時候完成，所以多這個function來處理拿到表單後做的事情
+          //先把表單放到#modal裡
+          $("#modals").html(form);
+          //宣告modal物件
+          stuModal = new bootstrap.Modal("#studentForm", {
+            keyboard: false,
+          });
+          //註冊modal的顯示物件
+          $("#studentForm").on("show.bs.modal", () => {
+            $.get("./api/get_schools.php", (options) => {
+              $("#graduate_at").html(options);
+            });
+          });
+          //觸發顯示
+          stuModal.show("student Form");
         });
-      });
-      //觸發顯示
-      stuModal.show("student Form");
-    });
+        break;
+      case "edit":
+        // console.log("送出前的id=" + id);
+        $.get("./api/user_form.php", { id }, (form) => {
+          //設這個function的原由，在於不知道這個請求什麼時候完成，所以多這個function來處理拿到表單後做的事情
+          //先把表單放到#modal裡
+          $("#modals").html(form);
+          //宣告modal物件
+          stuModal = new bootstrap.Modal("#studentForm", {
+            keyboard: false,
+          });
+          //註冊modal的顯示物件
+          $("#studentForm").on("show.bs.modal", () => {
+            $.get("./api/get_schools.php", (options) => {
+              $("#graduate_at").html(options);
+            });
+          });
+          //觸發顯示
+          stuModal.show("student Form");
+        });
+        break;
+    }
   }
   function create() {}
 
@@ -120,7 +145,7 @@
       <div class="card-text">${data.birthday}</div>
       <div class="card-text">${data.uni_id}</div>
     <div class="controls">
-      <a href="#" class="btn btn-primary">編輯</a>
+      <a href="Javascript:popForm('edit',${data.id})" class="btn btn-primary">編輯</a>
       <a href="Javascript:del(${data.id})" class="btn btn-danger">刪除</a>
       </div>
     </div>
