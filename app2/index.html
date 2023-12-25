@@ -59,55 +59,100 @@
               <form action="./api/insert.php" method="post" class="row p-3">
                 <div class="mb-3 col-6">
                   <label for="name" class="form-label">姓名</label>
-                  <input type="text" class="form-control" id="name" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="name"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="school_num" class="form-label">學號</label>
-                  <input type="text" class="form-control" id="school_num" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="school_num"
+                    id="school_num"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="birthday" class="form-label">生日</label>
-                  <input type="date" class="form-control" id="birthday" />
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="birthday"
+                    id="birthday"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="uni_id" class="form-label">身份證字號</label>
-                  <input type="text" class="form-control" id="uni_id" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="uni_id"
+                    id="uni_id"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="addr" class="form-label">地址</label>
-                  <input type="text" class="form-control" id="addr" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="addr"
+                    id="addr"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="parents" class="form-label">家長</label>
-                  <input type="text" class="form-control" id="parents" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="parents"
+                    id="parents"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="tel" class="form-label">電話</label>
-                  <input type="text" class="form-control" id="tel" />
+                  <input type="text" class="form-control" name="tel" id="tel" />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="dept" class="form-label">科系</label>
-                  <input type="text" class="form-control" id="dept" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="dept"
+                    id="dept"
+                  />
                 </div>
                 <div class="mb-3 col-6">
                   <label for="graduate_at" class="form-label">畢業學校</label>
-                  <input type="text" class="form-control" id="graduate_at" />
+                  <select name="" id="" class="form-select">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                  </select>
                 </div>
                 <div class="mb-3 col-6">
                   <label for="status_code" class="form-label">畢業狀態</label>
-                  <input type="text" class="form-control" id="status_code" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="status_code"
+                    id="status_code"
+                  />
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    取消
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    確認新增
+                  </button>
                 </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                取消
-              </button>
-              <button type="button" class="btn btn-primary">確認新增</button>
             </div>
           </div>
         </div>
