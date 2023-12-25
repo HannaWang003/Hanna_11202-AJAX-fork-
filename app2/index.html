@@ -11,16 +11,111 @@
     <!---匯入要使用的函式庫--->
   </head>
   <body>
-    <h1 class="header">學生資料管理系統</h1>
+    <h1 class="header">
+      學生資料管理系統
+      <button
+        type="button"
+        class="btn btn-lg btn-primary mx-3"
+        onclick="stuModal.show('studentForm')"
+      >
+        +新增
+      </button>
+    </h1>
     <div class="container">
       <div class="sex">
-        <button type="button" onclick="query('sex',1)" class="btn btn-primary">男生</button>
-        <button type="button" onclick="query('sex',2)" class="btn btn-warning">女生</button>
+        <button type="button" onclick="query('sex',1)" class="btn btn-primary">
+          男生
+        </button>
+        <button type="button" onclick="query('sex',2)" class="btn btn-warning">
+          女生
+        </button>
       </div>
       <div class="classes my-2"></div>
       <div class="users d-flex flex-wrap"></div>
     </div>
+    <div id="modals">
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="studentForm"
+        tabindex="-1"
+        aria-labelledby="studentFormLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-center modal-dialog-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="studentFormLabel">
+                新增 - 學生資料
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form action="./api/insert.php" method="post" class="row p-3">
+                <div class="mb-3 col-6">
+                  <label for="name" class="form-label">姓名</label>
+                  <input type="text" class="form-control" id="name" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="school_num" class="form-label">學號</label>
+                  <input type="text" class="form-control" id="school_num" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="birthday" class="form-label">生日</label>
+                  <input type="date" class="form-control" id="birthday" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="uni_id" class="form-label">身份證字號</label>
+                  <input type="text" class="form-control" id="uni_id" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="addr" class="form-label">地址</label>
+                  <input type="text" class="form-control" id="addr" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="parents" class="form-label">家長</label>
+                  <input type="text" class="form-control" id="parents" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="tel" class="form-label">電話</label>
+                  <input type="text" class="form-control" id="tel" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="dept" class="form-label">科系</label>
+                  <input type="text" class="form-control" id="dept" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="graduate_at" class="form-label">畢業學校</label>
+                  <input type="text" class="form-control" id="graduate_at" />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="status_code" class="form-label">畢業狀態</label>
+                  <input type="text" class="form-control" id="status_code" />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                取消
+              </button>
+              <button type="button" class="btn btn-primary">確認新增</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <script src="../plugin/js/bootstrap.js"></script>
+    <!-- <script src="../plugin/js/bootstrap.bundle.js"></script> -->
     <script src="../plugin/js/jquery.js"></script>
   </body>
 </html>
@@ -34,6 +129,9 @@
    ************************************/
   queryAll();
   queryClasses();
+  const stuModal = new bootstrap.Modal("#studentForm", {
+    keyboard: false,
+  });
 
   //新增資料的函式
   function create() {}
@@ -41,56 +139,55 @@
   //查詢資料的函式
   //查詢特定條件的函式
   // function query(def){
-    // def = def.split(",")
-  function query(type,val){
-    $.get(`./api/query.php?do=${type}`,{val},(res)=>{
-console.log(res);
-render(res);
-    })
+  // def = def.split(",")
+  function query(type, val) {
+    $.get(`./api/query.php?do=${type}`, { val }, (res) => {
+      console.log(res);
+      render(res);
+    });
   }
-// 查詢全校班級
-function queryClasses(){
-  $.getJSON("./api/query.php?do=classes", (classes) => {
-// console.log(classes)
-classes.forEach((cla,idx)=>{
-  let class_item;
-  class_item = `<button onclick="query('class',${cla.code})" class='btn btn-info text-center fs-5 me-2 my-2'>${cla.name}</button>`;
-  $(".classes").append(class_item);
-})
-  })
-
-}
-//查詢全部資料的函式
+  // 查詢全校班級
+  function queryClasses() {
+    $.getJSON("./api/query.php?do=classes", (classes) => {
+      // console.log(classes)
+      classes.forEach((cla, idx) => {
+        let class_item;
+        class_item = `<button onclick="query('class',${cla.code})" class='btn btn-info text-center fs-5 me-2 my-2'>${cla.name}</button>`;
+        $(".classes").append(class_item);
+      });
+    });
+  }
+  //查詢全部資料的函式
   function queryAll() {
     //如果後端有header(..json)且echo json_encode(返回的數值)，前端可以不用寫成.getJSON()
     $.getJSON("./api/query.php?do=all", (datas) => {
       // users = JSON.parse(users)
       // console.log(users);
       //設置一組html格式，用來顯示取得的資料
-render(datas);
+      render(datas);
     });
   }
-  
-  function render(datas){
+
+  function render(datas) {
     $(".users").html("");
     let data_layout;
-      datas.forEach((data, idx) => {
-        data_layout = `<div class='p-1' id='user${data.id}'>
-<div class="card" style="width: 18rem;">
-<div class='name text-center fs-3'>${data.name}</div>
-  <div class="card-body">
-    <h5 class="card-title">${data.school_num}</h5>
-    <div class="card-text">${data.birthday}</div>
-    <div class="card-text">${data.uni_id}</div>
-  <div class="controls">
-    <a href="#" class="btn btn-primary">編輯</a>
-    <a href="Javascript:del(${data.id})" class="btn btn-danger">刪除</a>
+    datas.forEach((data, idx) => {
+      data_layout = `<div class='p-1' id='user${data.id}'>
+  <div class="card" style="width: 18rem;">
+  <div class='name text-center fs-3'>${data.name}</div>
+    <div class="card-body">
+      <h5 class="card-title">${data.school_num}</h5>
+      <div class="card-text">${data.birthday}</div>
+      <div class="card-text">${data.uni_id}</div>
+    <div class="controls">
+      <a href="#" class="btn btn-primary">編輯</a>
+      <a href="Javascript:del(${data.id})" class="btn btn-danger">刪除</a>
+      </div>
     </div>
   </div>
-</div>
-</div>`;
-        $(".users").append(data_layout);
-      });
+  </div>`;
+      $(".users").append(data_layout);
+    });
   }
 
   //編輯資料的函式
@@ -99,10 +196,10 @@ render(datas);
   //刪除資料的函式
   function del(id) {
     let con = confirm("確定要刪除嗎?");
-    if(con){
-$.post('./api/delete.php',{id},(res)=>{
-$(`#user${id}`).remove();
-})
+    if (con) {
+      $.post("./api/delete.php", { id }, (res) => {
+        $(`#user${id}`).remove();
+      });
     }
   }
 </script>
