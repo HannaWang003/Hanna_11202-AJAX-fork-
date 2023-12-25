@@ -126,10 +126,7 @@
                 </div>
                 <div class="mb-3 col-6">
                   <label for="graduate_at" class="form-label">畢業學校</label>
-                  <select name="" id="" class="form-select">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                  </select>
+                  <select name="" id="schools" class="form-select"></select>
                 </div>
                 <div class="mb-3 col-6">
                   <label for="status_code" class="form-label">畢業狀態</label>
@@ -176,6 +173,11 @@
   queryClasses();
   const stuModal = new bootstrap.Modal("#studentForm", {
     keyboard: false,
+  });
+  $("#studentForm").on("show.bs.modal", () => {
+    $.get("./api/get_schools.php", (options) => {
+      $("#graduate_at").html(options);
+    });
   });
 
   //新增資料的函式
