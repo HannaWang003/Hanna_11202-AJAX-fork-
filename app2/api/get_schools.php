@@ -1,8 +1,8 @@
 <?php
 include_once "db.php";
 $schools = $GraduateSchool->all();
-$options = '';
+$options = "";
 foreach ($schools as $school) {
-    $options .= "<option value='{$school['id']}'>{$school['count']}{$school['name']}</option>";
+    $options .= "<option value='{$school['id']}'>{$school['county']}{$school['name']}</option>";
 }
 echo $options;
